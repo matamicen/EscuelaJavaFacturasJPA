@@ -9,18 +9,22 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.example.facturas.demoFacturas.model.Cliente;
 import com.example.facturas.demoFacturas.model.DaoCliente;
 import com.example.facturas.demoFacturas.model.DaoFactura;
 import com.example.facturas.demoFacturas.model.DaoItems;
 import com.example.facturas.demoFacturas.model.DaoProducto;
+import com.example.facturas.demoFacturas.model.DaoUsuario;
 import com.example.facturas.demoFacturas.model.Factura;
 import com.example.facturas.demoFacturas.model.Items;
+import com.example.facturas.demoFacturas.model.Usuario;
 
 
 
 @Controller
+@SessionAttributes("usuariologueado")
 public class MainController {
 	
 	@Autowired
@@ -31,26 +35,48 @@ public class MainController {
 	DaoItems daoitems;
 	@Autowired 
 	DaoProducto daoproducto;
+	@Autowired 
+	DaoUsuario daousuario;
+
 	
 	
-	@RequestMapping(value="/", method = RequestMethod.GET)
-	public String home (Model model)
+	
+	@RequestMapping(value="/login", method = RequestMethod.GET)
+	public String login (Model model)
 	{
-		Factura factura = new Factura();
-		 model.addAttribute("fac",factura); 
 		
+		
+		return "login";
+	}
+	
+	@RequestMapping(value="/chequealogin", method = RequestMethod.POST)
+	public String chequealogin (Model model, @RequestParam String nombre, @RequestParam String password)
+	{
+		String pagina = "login";
+		
+		if (daousuario.findBynombre(nombre).size() > 0)
+		{	
+		
+		 Factura factura = new Factura();
+		 model.addAttribute("fac",factura); 
+		 model.addAttribute("usuariologueado",daousuario.findBynombre(nombre).get(0));
+		 pagina = "homepage";
+		}
 	
 		
-		return "homepage";
+		return pagina;
 	}
 	
 	@RequestMapping(value="/crearfactura", method = RequestMethod.POST)
-	public String crearFactura (Model model, @ModelAttribute Factura factura,
+	public String crearFactura (Model model,@ModelAttribute Factura factura ,
+			@ModelAttribute("usuariologueado") Usuario usuario,
 			@RequestParam long clienteid)
 	{
 		
 		Cliente cli = daocliente.findOne(clienteid);
 		factura.setCliente(cli);
+		System.out.println(" imprimo usuario que viene de SessionAttributes id:"+usuario.getIduser() + "nombre:" + usuario.getNombre() + usuario.getPassword());
+		factura.setUsuario(usuario);
 		
 		factura.setFecha(new java.sql.Date(Calendar.getInstance().getTimeInMillis()));
 		daofactura.save(factura);
@@ -58,11 +84,6 @@ public class MainController {
 		 model.addAttribute("fac",factura); 
 		 model.addAttribute("listafacturas",daofactura.findAll());
 		
-		/*Fabricante fabricante = new Fabricante();   
-        
-        model.addAttribute("mensaje", men);
-        model.addAttribute("fab",fabricante); 
-        */
 		
 		return "listafacturas";
 	}
@@ -119,8 +140,7 @@ public class MainController {
 		 }
 		 
 		 model.addAttribute("totalfactura",total); 
-		 
-	
+		 	
 		
 		return "impresionfactura";
 	}

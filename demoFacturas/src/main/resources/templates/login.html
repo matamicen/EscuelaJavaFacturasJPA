@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../../css/main.css" />
+<title>LoginPage Title</title>
+</head>
+<body>
+
+<h1>Login Usuario</h1>
+
+ 
+ <form action="#" th:action="@{/chequealogin}"  method="post">
+   
+    <p>Nombre: <input type="text" name="nombre" /></p>
+     <p>Password: <input type="text" name="password" /></p>
+ 
+    <p><input type="submit" class="btn btn-success" value="Login" /> <input type="reset" value="Reset" /></p>
+</form>
+ 
+
+
+</body>
+</html>

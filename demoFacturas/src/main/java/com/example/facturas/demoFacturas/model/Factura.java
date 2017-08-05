@@ -26,6 +26,10 @@ public class Factura {
 	@OneToMany(mappedBy="factura")
 	private List<Items> items;
 	
+	@ManyToOne
+	@JoinColumn(name= "usuario_id")
+	private Usuario usuario;
+	
 	public Factura(Long idfac, Date fecha, Cliente cliente) {
 		super();
 		this.idfac = idfac;
@@ -58,6 +62,12 @@ public class Factura {
 	}
 	public void setItems(List<Items> items) {
 		this.items = items;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 	

@@ -11,9 +11,7 @@
 <body>
 
 <h1>Crear Factura</h1>
-<!--  <p>This is a paragraph.</p>-->
- <!--  <p th:text="${mensaje}"></p> -->
- <!--  <p th:text="'id: ' + ${user.id}" /> -->
+
  
  <form action="#" th:action="@{/crearfactura}" th:object="${fac}" method="post">
     <p> <input type="text" th:field="*{idfac}" /></p>
@@ -22,7 +20,7 @@
     <p><input type="submit" class="btn btn-success" value="Post" /> <input type="reset" value="Reset" /></p>
 </form>
  
- <!--  <a href="/addlist">Ir a Add List</a>-->
+
 
 </body>
 </html>
