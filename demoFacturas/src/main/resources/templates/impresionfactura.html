@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../../css/main.css" />
+<title>Impresion Factura</title>
+</head>
+<body>
+
+<h1>Impresion Factura</h1>
+<h2>Factura ID:</h2>
+
+ <p th:text="${fac.getIdfac()}"></p> 
+ <h2>Fecha:</h2>
+
+ <p th:text="${fac.getFecha()}"></p> 
+<br/>
+
+<!--  <p>This is a paragraph.</p>-->
+ <!--  <p th:text="${mensaje}"></p>  -->
+ <!--  <p th:text="'id: ' + ${user.id}" /> -->
+ 
+<table class="table table-striped">
+  <tr>
+  	<th>Id Factura</th>
+  	<th>Nombre Producto</th>
+  	<th>Precio</th>
+  	<th>Qty</th>
+  	
+  	
+  	
+  </tr> 
+  <tr th:each="lis: ${listaitems}">
+  	
+     <td th:text="${lis.getProducto().getIdprod()}"></td> 
+       <td th:text="${lis.getProducto().getNombre()}"></td> 
+       <td th:text="${lis.getProducto().getPrecio()}"></td> 
+          <td th:text="${lis.getQty()}"></td> 
+       
+          </tr>
+</table>
+ 
+ <h2>Importe Total: </h2>
+
+  <p th:text="${totalfactura}"></p>  
+ <!--  <a href="/addlist">Ir a Add List</a>-->
+
+</body>
+</html>

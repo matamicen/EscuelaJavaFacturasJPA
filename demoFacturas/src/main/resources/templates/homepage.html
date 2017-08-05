@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../../css/main.css" />
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>Crear Factura</h1>
+<!--  <p>This is a paragraph.</p>-->
+ <!--  <p th:text="${mensaje}"></p> -->
+ <!--  <p th:text="'id: ' + ${user.id}" /> -->
+ 
+ <form action="#" th:action="@{/crearfactura}" th:object="${fac}" method="post">
+    <p> <input type="text" th:field="*{idfac}" /></p>
+    <p>Id Cliente: <input type="text" name="clienteid" /></p>
+ 
+    <p><input type="submit" class="btn btn-success" value="Post" /> <input type="reset" value="Reset" /></p>
+</form>
+ 
+ <!--  <a href="/addlist">Ir a Add List</a>-->
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet" type="text/css"
+	href="webjars/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/main.css}"
+	href="../../css/main.css" />
+<title>Lista Facturas</title>
+</head>
+<body>
+
+<h2>Factura ID:</h2>
+
+ <p th:text="${fac.getIdfac()}"></p> 
+ <h2>Fecha:</h2>
+
+ <p th:text="${fac.getFecha()}"></p> 
+<br/>
+
+<h2>Items agregados a la factura</h2>
+<table class="table table-striped">
+  <tr>
+  	<th>Id Producto</th>
+  	<th>Nombre</th>
+  	<th>Precio</th>
+  	<th>Qty</th>
+  </tr> 
+  <tr th:each="lis: ${listaitems}">
+  	
+     <td th:text="${lis.getProducto().getIdprod()}"></td> 
+       <td th:text="${lis.getProducto().getNombre()}"></td> 
+       <td th:text="${lis.getProducto().getPrecio()}"></td> 
+          <td th:text="${lis.getQty()}"></td> 
+       
+          </tr>
+</table>
+
+<a th:href="@{/imprimirfactura(idfac=${fac.getIdfac()})}">Imprimir Factura</a> 
+
+<h2>Agregar Prodcuto a factura:</h2>
+<form action="#" th:action="@{/agregaprodfactura}" th:object="${fac}" method="post">
+    <p> <input type="text" th:field="*{idfac}" /></p>
+    <p>Producto Id: <input type="text" name="idprod" /></p>
+    <p>Qty: <input type="text" name="qty" /></p>
+ 
+    <p><input type="submit" class="btn btn-success" value="Agregar" /> <input type="reset" value="Reset" /></p>
+</form>
+<br/>
+   
+<table class="table table-striped">
+  <tr>
+  	<th>Id Producto</th>
+  	<th>Nombre</th>
+  	<th>Precio</th>
+  </tr> 
+  <tr th:each="lis: ${listaproductos}">
+  	
+     <td th:text="${lis.getIdprod()}"></td> 
+       <td th:text="${lis.getNombre()}"></td> 
+       <td th:text="${lis.getPrecio()}"></td> 
+       
+          </tr>
+</table>
+
+</body>
+</html>
