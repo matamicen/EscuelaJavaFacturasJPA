@@ -121,7 +121,7 @@ public class MainController {
 		 model.addAttribute("fac",factaux); 
 		 model.addAttribute("listaproductos",daoproducto.findAll());
 		 model.addAttribute("listaitems",daoitems.findByfactura(factaux));
-		    
+		 //.   
 		
 		return "agregandoproductos";
 	}
