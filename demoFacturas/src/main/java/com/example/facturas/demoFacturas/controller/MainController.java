@@ -1,6 +1,9 @@
 package com.example.facturas.demoFacturas.controller;
 
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +27,7 @@ import com.example.facturas.demoFacturas.model.Usuario;
 
 
 @Controller
-@SessionAttributes("usuariologueado")
+@SessionAttributes({"usuariologueado","carrito"})
 public class MainController {
 	
 	@Autowired
@@ -44,7 +47,7 @@ public class MainController {
 	@RequestMapping(value="/login", method = RequestMethod.GET)
 	public String login (Model model)
 	{
-		
+		model.addAttribute("carrito",new ArrayList<Items>());
 		
 		return "login";
 	}
@@ -105,21 +108,20 @@ public class MainController {
 
 	@RequestMapping(value="/agregaprodfactura", method = RequestMethod.POST)
 	public String agregaProddFactura (Model model, @ModelAttribute Factura factura,
+			@ModelAttribute("carrito") List<Items> carritoitems,
 			@RequestParam long idprod, @RequestParam int qty )
 	{
 		Factura factaux = daofactura.findOne(factura.getIdfac());
 		Items item = new Items(factaux, daoproducto.findOne(idprod), qty);
-		
+		carritoitems.add(item);
+		model.addAttribute("carrito",carritoitems);
+					
 		daoitems.save(item);
-		
-		
+				
 		 model.addAttribute("fac",factaux); 
 		 model.addAttribute("listaproductos",daoproducto.findAll());
 		 model.addAttribute("listaitems",daoitems.findByfactura(factaux));
-		
-			
-	
-        
+		    
 		
 		return "agregandoproductos";
 	}
